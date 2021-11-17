@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(
           title: Text("Breeds"),
         ),
-        body: PhotoPage(),
+        body: DogPage(),
       ),
     );
   }

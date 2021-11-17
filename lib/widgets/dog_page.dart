@@ -5,25 +5,24 @@ import "../models/dog_model.dart";
 import "dart:async";
 import "dart:convert";
 
-class PhotoPage extends StatefulWidget {
+class DogPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     return _DogPageState();
   }
 }
 
-class _DogPageState extends State<PhotoPage> {
+class _DogPageState extends State<DogPage> {
   final apiURL = "https://dog.ceo/api/breeds/list/all";
   var dogFuture;
 
   Future<List<Dog>?> getBreedList() async {
-    var dogFuture;
     try {
       final response = await http.get(Uri.parse(apiURL));
       if (response.statusCode == 200) {
         var breedList = <Dog>[];
-        for (var breedJSON in json.decode(response.body)) {
-          breedList.add(Dog.fromJSON(breedJSON));
+        for (var breed in json.decode(response.body)["message"].keys) {
+          breedList.add(Dog(breed));
         }
         return breedList;
       }
@@ -45,7 +44,7 @@ class _DogPageState extends State<PhotoPage> {
         return ListView.builder(
           itemCount: (snapshot.data != null) ? snapshot.data!.length : 0,
           itemBuilder: (context, index) {
-            return DogCard(snapshot.data![index]);
+            return DogCard(snapshot.data![index].breed);
           },
         );
       },
