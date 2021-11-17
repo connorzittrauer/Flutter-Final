@@ -3,7 +3,8 @@ import "package:flutter/material.dart";
 
 class DogCard extends StatelessWidget {
   late String breed;
-  DogCard(String breed, {Key? key}) : super(key: key);
+
+  DogCard(this.breed, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

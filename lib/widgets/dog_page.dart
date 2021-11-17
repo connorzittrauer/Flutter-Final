@@ -14,7 +14,7 @@ class DogPage extends StatefulWidget {
 
 class _DogPageState extends State<DogPage> {
   final apiURL = "https://dog.ceo/api/breeds/list/all";
-  var dogFuture;
+  // var dogFuture;
 
   Future<List<Dog>?> getBreedList() async {
     try {
