@@ -39,7 +39,7 @@ class _DogPageState extends State<DogPage> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Dog>?>(
-      future: dogFuture,
+      future: getBreedList(),
       builder: (context, snapshot) {
         return ListView.builder(
           itemCount: (snapshot.data != null) ? snapshot.data!.length : 0,

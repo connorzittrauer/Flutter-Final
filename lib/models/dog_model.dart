@@ -7,4 +7,8 @@ class Dog {
   String breed;
 
   Dog(this.breed);
+
+  String getBreed() {
+    return breed;
+  }
 }
