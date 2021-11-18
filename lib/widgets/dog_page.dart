@@ -13,21 +13,19 @@ class DogPage extends StatefulWidget {
 }
 
 class _DogPageState extends State<DogPage> {
-  final apiURL = "https://dog.ceo/api/breeds/list/all";
-  // var dogFuture;
+  Future<List<Dog>> getBreedList() async {
+    const apiURL = "https://dog.ceo/api/breeds/list/all";
 
-  Future<List<Dog>?> getBreedList() async {
-    try {
-      final response = await http.get(Uri.parse(apiURL));
-      if (response.statusCode == 200) {
-        var breedList = <Dog>[];
-        for (var breed in json.decode(response.body)["message"].keys) {
-          breedList.add(Dog(breed));
-        }
-        return breedList;
+    final response = await http.get(Uri.parse(apiURL));
+
+    if (response.statusCode == 200) {
+      var breedList = <Dog>[];
+      for (var breed in json.decode(response.body)["message"].keys) {
+        breedList.add(Dog(breed: breed, link: ""));
       }
-    } catch (e) {
-      return null;
+      return breedList;
+    } else {
+      throw Exception('Failed to load dog');
     }
   }
 
@@ -49,5 +47,36 @@ class _DogPageState extends State<DogPage> {
         );
       },
     );
+  }
+}
+
+//need way to get currently selected dog
+class DogRoute extends StatelessWidget {
+  String breed;
+  DogRoute({Key? key, required this.breed}) : super(key: key);
+
+  Future<Dog> getRandomImage() async {
+    var API_LINK = 'https://dog.ceo/api/breed/$breed/images/random';
+    print(breed);
+    final response = await http.get(Uri.parse(API_LINK));
+
+    if (response.statusCode == 200) {
+      return Dog.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to dog pic');
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var directLink = getRandomImage();
+    print(directLink);
+    return FutureBuilder<Dog>(
+        future: directLink,
+        builder: (context, snapshot) {
+          return Center(
+            child: Image.network(snapshot.data!.link),
+          );
+        });
   }
 }

@@ -1,3 +1,4 @@
+import 'package:final_dog_app/widgets/dog_list.dart';
 import 'package:final_dog_app/widgets/dog_page.dart';
 import 'package:flutter/material.dart';
 
@@ -15,6 +16,12 @@ class MyApp extends StatelessWidget {
         ),
         body: DogPage(),
       ),
+      initialRoute: '/',
+      routes: {
+        '/route': (context) => DogRoute(
+              breed: "",
+            )
+      },
     );
   }
 }

@@ -4,11 +4,18 @@ import 'dart:collection';
 import "package:http/http.dart" as http;
 
 class Dog {
-  String breed;
+  final String link;
+  final String breed;
+  Dog({required this.link, required this.breed});
 
-  Dog(this.breed);
+  factory Dog.fromJson(Map<String, dynamic> json) {
+    return Dog(
+      breed: json['message'],
+      link: json['message'],
+    );
+  }
 
-  String getBreed() {
-    return breed;
+  String getLink() {
+    return link;
   }
 }
