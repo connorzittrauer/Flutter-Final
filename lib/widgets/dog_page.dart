@@ -4,6 +4,7 @@ import 'dog_list.dart';
 import "../models/dog_model.dart";
 import "dart:async";
 import "dart:convert";
+import 'package:cached_network_image/cached_network_image.dart';
 
 class DogPage extends StatefulWidget {
   @override
@@ -53,8 +54,8 @@ class _DogPageState extends State<DogPage> {
 
 //need way to get currently selected dog
 class DogRoute extends StatelessWidget {
-  String breed;
-  DogRoute({Key? key, required this.breed}) : super(key: key);
+  final String breed;
+  const DogRoute({Key? key, required this.breed}) : super(key: key);
 
   Future<Dog?> getRandomImage() async {
     var API_LINK = 'https://dog.ceo/api/breed/$breed/images/random';
@@ -75,9 +76,69 @@ class DogRoute extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(title: Text(breed.toUpperCase())),
             body: Center(
-              child: Image.network(snapshot.data!.link),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Text("Info"),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CachedNetworkImage(
+                        width: 350,
+                        height: 350,
+                        imageUrl: snapshot.data?.link ?? null.toString(),
+                        placeholder: (context, url) =>
+                            const CircularProgressIndicator(),
+                        errorWidget: (context, url, error) =>
+                            const CircularProgressIndicator(),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           );
         });
   }
 }
+
+// class DogInfo extends StatelessWidget {
+//   late String breed;
+//   DogInfo({Key? key, required this.breed}) : super(key: key);
+
+//   Future<Dog?> getWikiInfo() async {
+//     var query = breed + "dog breed";
+//     var API_KEY = "AIzaSyAw-X1ZYE11v0SQeLzHWz6sA-wOnkfEzIk";
+//     final apiURL =
+//         "https://kgsearch.googleapis.com/v1/entities:search?query=$query&key=$API_KEY&limit=1&indent=True";
+
+//     try {
+//       final response = await http.get(Uri.parse(apiURL));
+//       if (response.statusCode == 200) {
+//         return Dog.fromJson(json.decode(response.body)["itemListElement"][0]
+//             ["result"]["detailedDescription"]);
+//       }
+//     } catch (e) {
+//       return null;
+//     }
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return FutureBuilder<Dog?>(
+//         future: getWikiInfo(),
+//         builder: (context, snapshot) {
+//           return Container(
+//             width: 350,
+//             height: 150,
+//             child: Text(snapshot.data?.info ?? "loading..."),
+//           );
+//         });
+//   }
+// }
