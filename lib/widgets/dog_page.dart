@@ -55,15 +55,14 @@ class DogRoute extends StatelessWidget {
   String breed;
   DogRoute({Key? key, required this.breed}) : super(key: key);
 
-  Future<Dog> getRandomImage() async {
+  Future<Dog?> getRandomImage() async {
     var API_LINK = 'https://dog.ceo/api/breed/$breed/images/random';
-    print(breed);
-    final response = await http.get(Uri.parse(API_LINK));
-
-    if (response.statusCode == 200) {
+    try {
+      final response = await http.get(Uri.parse(API_LINK));
+      if (response.statusCode == 200) {}
       return Dog.fromJson(jsonDecode(response.body));
-    } else {
-      throw Exception('Failed to dog pic');
+    } catch (e) {
+      return null;
     }
   }
 
