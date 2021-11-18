@@ -14,8 +14,4 @@ class Dog {
       link: json['message'],
     );
   }
-
-  String getLink() {
-    return link;
-  }
 }

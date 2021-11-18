@@ -69,13 +69,14 @@ class DogRoute extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var directLink = getRandomImage();
-    print(directLink);
-    return FutureBuilder<Dog>(
-        future: directLink,
+    return FutureBuilder<Dog?>(
+        future: getRandomImage(),
         builder: (context, snapshot) {
-          return Center(
-            child: Image.network(snapshot.data!.link),
+          return Scaffold(
+            appBar: AppBar(title: Text(breed)),
+            body: Center(
+              child: Image.network(snapshot.data!.link),
+            ),
           );
         });
   }

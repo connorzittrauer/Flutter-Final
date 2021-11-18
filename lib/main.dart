@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/route': (context) => DogRoute(
-              breed: "",
+              breed: "akita",
             )
       },
     );
