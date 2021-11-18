@@ -13,19 +13,20 @@ class DogPage extends StatefulWidget {
 }
 
 class _DogPageState extends State<DogPage> {
-  Future<List<Dog>> getBreedList() async {
+  Future<List<Dog>?> getBreedList() async {
     const apiURL = "https://dog.ceo/api/breeds/list/all";
 
-    final response = await http.get(Uri.parse(apiURL));
-
-    if (response.statusCode == 200) {
-      var breedList = <Dog>[];
-      for (var breed in json.decode(response.body)["message"].keys) {
-        breedList.add(Dog(breed: breed, link: ""));
+    try {
+      final response = await http.get(Uri.parse(apiURL));
+      if (response.statusCode == 200) {
+        var breedList = <Dog>[];
+        for (var breed in json.decode(response.body)["message"].keys) {
+          breedList.add(Dog(breed: breed, link: ""));
+        }
+        return breedList;
       }
-      return breedList;
-    } else {
-      throw Exception('Failed to load dog');
+    } catch (e) {
+      return null;
     }
   }
 
@@ -72,7 +73,7 @@ class DogRoute extends StatelessWidget {
         future: getRandomImage(),
         builder: (context, snapshot) {
           return Scaffold(
-            appBar: AppBar(title: Text(breed)),
+            appBar: AppBar(title: Text(breed.toUpperCase())),
             body: Center(
               child: Image.network(snapshot.data!.link),
             ),

@@ -10,16 +10,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData.dark(),
       home: Scaffold(
         appBar: AppBar(
-          title: Text("Breeds"),
+          title: Text("Breed List"),
         ),
         body: DogPage(),
       ),
       initialRoute: '/',
       routes: {
         '/route': (context) => DogRoute(
-              breed: "akita",
+              breed: "",
             )
       },
     );

@@ -15,7 +15,7 @@ class DogCard extends StatelessWidget {
           children: <Widget>[
             ListTile(
               leading: Icon(Icons.pets),
-              title: Text(breed),
+              title: Text(breed.toUpperCase()),
               subtitle:
                   Text('Press View Images to see a picture of this breed'),
             ),
