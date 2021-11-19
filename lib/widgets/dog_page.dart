@@ -80,9 +80,8 @@ class DogRoute extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: DogInfo(breed: breed);
+                  DogInfo(
+                    breed: breed,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
