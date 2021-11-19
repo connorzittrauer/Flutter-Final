@@ -22,7 +22,7 @@ class _DogPageState extends State<DogPage> {
       if (response.statusCode == 200) {
         var breedList = <Dog>[];
         for (var breed in json.decode(response.body)["message"].keys) {
-          breedList.add(Dog(breed: breed, link: ""));
+          breedList.add(Dog(breed: breed, link: "", info: ""));
         }
         return breedList;
       }
@@ -82,8 +82,7 @@ class DogRoute extends StatelessWidget {
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    //here is where I want return an instance of the DogInfo class
-                    children: [Text("data")],
+                    children: DogInfo(breed: breed);
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -111,7 +110,7 @@ class DogInfo extends StatelessWidget {
   String breed;
   DogInfo({Key? key, required this.breed}) : super(key: key);
 
-  Future<Dog?> getWikiInfo() async {
+  Future<String?> getWikiInfo() async {
     var query = breed + " dog breed";
     var API_KEY = "AIzaSyAw-X1ZYE11v0SQeLzHWz6sA-wOnkfEzIk";
     final apiURL =
@@ -119,8 +118,8 @@ class DogInfo extends StatelessWidget {
     final response = await http.get(Uri.parse(apiURL));
     try {
       if (response.statusCode == 200) {
-        return Dog.fromJson(json.decode(response.body)["itemListElement"][0]
-            ["result"]["detailedDescription"]);
+        return (json.decode(response.body)["itemListElement"][0]["result"]
+            ["detailedDescription"]);
       }
     } catch (e) {
       return null;
@@ -129,7 +128,7 @@ class DogInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<Dog?>(
+    return FutureBuilder<String?>(
         future: getWikiInfo(),
         builder: (context, snapshot) {
           return Center(

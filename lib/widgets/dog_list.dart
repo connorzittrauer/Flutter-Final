@@ -23,7 +23,10 @@ class DogCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 TextButton(
-                  child: const Text('View Images'),
+                  child: const Text(
+                    'View Images',
+                    style: TextStyle(color: Colors.lightGreenAccent),
+                  ),
                   //needs to go to a new route with image
                   onPressed: () {
                     //could have one template class route, and simply pass the breed
