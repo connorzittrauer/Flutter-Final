@@ -22,7 +22,7 @@ class _DogPageState extends State<DogPage> {
       if (response.statusCode == 200) {
         var breedList = <Dog>[];
         for (var breed in json.decode(response.body)["message"].keys) {
-          breedList.add(Dog(breed: breed, link: "", info: ""));
+          breedList.add(Dog(breed: breed, link: ""));
         }
         return breedList;
       }
@@ -118,7 +118,7 @@ class DogInfo extends StatelessWidget {
     try {
       if (response.statusCode == 200) {
         return (json.decode(response.body)["itemListElement"][0]["result"]
-            ["detailedDescription"]);
+            ["detailedDescription"]['articleBody']);
       }
     } catch (e) {
       return null;
