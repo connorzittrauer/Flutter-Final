@@ -82,6 +82,7 @@ class DogRoute extends StatelessWidget {
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
+                    //here is where I want return an instance of the DogInfo class
                     children: [Text("data")],
                   ),
                   Row(
