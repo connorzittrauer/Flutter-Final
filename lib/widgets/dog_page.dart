@@ -111,7 +111,7 @@ class DogInfo extends StatelessWidget {
 
   Future<String?> getWikiInfo() async {
     var query = breed + " dog breed";
-    var API_KEY = "AIzaSyAw-X1ZYE11v0SQeLzHWz6sA-wOnkfEzIk";
+    var API_KEY = "";
     final apiURL =
         "https://kgsearch.googleapis.com/v1/entities:search?query=$query&key=$API_KEY&limit=1&indent=True";
     final response = await http.get(Uri.parse(apiURL));
@@ -132,7 +132,7 @@ class DogInfo extends StatelessWidget {
         builder: (context, snapshot) {
           return Center(
             //here is where wiki info will be retrieved
-            child: Text(snapshot.data.toString()),
+            child: Text(snapshot.data?.toString() ?? "loading..."),
           );
         });
   }
