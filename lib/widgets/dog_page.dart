@@ -82,9 +82,7 @@ class DogRoute extends StatelessWidget {
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Text("Info"),
-                    ],
+                    children: [Text("data")],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -108,37 +106,35 @@ class DogRoute extends StatelessWidget {
   }
 }
 
-// class DogInfo extends StatelessWidget {
-//   late String breed;
-//   DogInfo({Key? key, required this.breed}) : super(key: key);
+class DogInfo extends StatelessWidget {
+  String breed;
+  DogInfo({Key? key, required this.breed}) : super(key: key);
 
-//   Future<Dog?> getWikiInfo() async {
-//     var query = breed + "dog breed";
-//     var API_KEY = "AIzaSyAw-X1ZYE11v0SQeLzHWz6sA-wOnkfEzIk";
-//     final apiURL =
-//         "https://kgsearch.googleapis.com/v1/entities:search?query=$query&key=$API_KEY&limit=1&indent=True";
+  Future<Dog?> getWikiInfo() async {
+    var query = breed + " dog breed";
+    var API_KEY = "AIzaSyAw-X1ZYE11v0SQeLzHWz6sA-wOnkfEzIk";
+    final apiURL =
+        "https://kgsearch.googleapis.com/v1/entities:search?query=$query&key=$API_KEY&limit=1&indent=True";
+    final response = await http.get(Uri.parse(apiURL));
+    try {
+      if (response.statusCode == 200) {
+        return Dog.fromJson(json.decode(response.body)["itemListElement"][0]
+            ["result"]["detailedDescription"]);
+      }
+    } catch (e) {
+      return null;
+    }
+  }
 
-//     try {
-//       final response = await http.get(Uri.parse(apiURL));
-//       if (response.statusCode == 200) {
-//         return Dog.fromJson(json.decode(response.body)["itemListElement"][0]
-//             ["result"]["detailedDescription"]);
-//       }
-//     } catch (e) {
-//       return null;
-//     }
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return FutureBuilder<Dog?>(
-//         future: getWikiInfo(),
-//         builder: (context, snapshot) {
-//           return Container(
-//             width: 350,
-//             height: 150,
-//             child: Text(snapshot.data?.info ?? "loading..."),
-//           );
-//         });
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<Dog?>(
+        future: getWikiInfo(),
+        builder: (context, snapshot) {
+          return Center(
+            //here is where wiki info will be retrieved
+            child: Text(snapshot.data.toString()),
+          );
+        });
+  }
+}
