@@ -132,7 +132,8 @@ class DogInfo extends StatelessWidget {
         builder: (context, snapshot) {
           return Center(
             //here is where wiki info will be retrieved
-            child: Text(snapshot.data?.toString() ?? "loading..."),
+            child:
+                Text(snapshot.data?.toString() ?? "No info to be displayed..."),
           );
         });
   }
