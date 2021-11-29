@@ -70,23 +70,23 @@ class DogRoute extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<Dog?>(
-        future: getRandomImage(),
-        builder: (context, snapshot) {
-          return Scaffold(
-            appBar: AppBar(title: Text(breed.toUpperCase())),
-            body: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  DogInfo(
-                    breed: breed,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CachedNetworkImage(
+    return Scaffold(
+      appBar: AppBar(title: Text(breed.toUpperCase())),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            DogInfo(
+              breed: breed,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                FutureBuilder<Dog?>(
+                    future: getRandomImage(),
+                    builder: (context, snapshot) {
+                      return CachedNetworkImage(
                         width: 350,
                         height: 350,
                         imageUrl: snapshot.data?.link ?? null.toString(),
@@ -94,14 +94,14 @@ class DogRoute extends StatelessWidget {
                             const CircularProgressIndicator(),
                         errorWidget: (context, url, error) =>
                             const CircularProgressIndicator(),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+                      );
+                    })
+              ],
             ),
-          );
-        });
+          ],
+        ),
+      ),
+    );
   }
 }
 
@@ -110,7 +110,7 @@ class DogInfo extends StatelessWidget {
   DogInfo({Key? key, required this.breed}) : super(key: key);
 
   Future<String?> getWikiInfo() async {
-    var query = breed + " dog breed";
+    var query = breed;
     var API_KEY = "";
     final apiURL =
         "https://kgsearch.googleapis.com/v1/entities:search?query=$query&key=$API_KEY&limit=1&indent=True";
@@ -131,7 +131,6 @@ class DogInfo extends StatelessWidget {
         future: getWikiInfo(),
         builder: (context, snapshot) {
           return Center(
-            //here is where wiki info will be retrieved
             child:
                 Text(snapshot.data?.toString() ?? "No info to be displayed..."),
           );
