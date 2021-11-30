@@ -5,6 +5,7 @@ import "../models/dog_model.dart";
 import "dart:async";
 import "dart:convert";
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:final_dog_app/exceptions.dart';
 
 class DogPage extends StatefulWidget {
   @override
@@ -112,8 +113,12 @@ class DogInfo extends StatelessWidget {
   Future<String?> getWikiInfo() async {
     var query = breed;
     var API_KEY = "";
+    Exceptions ex = new Exceptions();
+    query = ex.parse(breed);
+
     final apiURL =
         "https://kgsearch.googleapis.com/v1/entities:search?query=$query&key=$API_KEY&limit=1&indent=True";
+    print(apiURL);
     final response = await http.get(Uri.parse(apiURL));
     try {
       if (response.statusCode == 200) {
