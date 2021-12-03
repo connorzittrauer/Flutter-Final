@@ -63,6 +63,12 @@ class Exceptions {
       case 'stbernard':
         query = 'saint bernard';
         break;
+      case 'greyhound':
+        query = 'english greyhound';
+        break;
+      case 'tervuren':
+        query = 'Chien de Berger Belge';
+        break;
       default:
         query = breed;
         break;
